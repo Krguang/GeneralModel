@@ -462,6 +462,30 @@ void UsartReceive_IDLE(UART_HandleTypeDef *huart)
 
 	}
 }
+
+void dma_send(UART_HandleTypeDef *huart, DMA_HandleTypeDef *hdma, unsigned char *buffer, unsigned int length)
+{
+
+	/**
+	//等待上一次的数据发送完毕
+	while (HAL_DMA_GetState(&hdma_usart1_tx) == HAL_DMA_STATE_BUSY);
+
+	//关闭DMA
+	__HAL_DMA_DISABLE(&hdma_usart1_tx);
+
+	//开始发送数据
+	HAL_UART_Transmit_DMA(&huart1, buffer, length);
+	*/
+	while (HAL_DMA_GetState(hdma) == HAL_DMA_STATE_BUSY);
+
+	//关闭DMA 
+	__HAL_DMA_DISABLE(hdma);
+
+	//开始发送数据
+	HAL_UART_Transmit_DMA(huart, buffer, length);
+
+}
+
 /* USER CODE END 1 */
 
 /**

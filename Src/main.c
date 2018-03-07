@@ -43,7 +43,7 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "dataProcessing.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -113,6 +113,16 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
+  /* USART接收 */
+  if (HAL_UART_Receive_DMA(&huart1, (uint8_t *)&usart1_rx_buffer, 128) != HAL_OK)    Error_Handler();
+  if (HAL_UART_Receive_DMA(&huart2, (uint8_t *)&usart2_rx_buffer, 128) != HAL_OK)    Error_Handler();
+  if (HAL_UART_Receive_DMA(&huart3, (uint8_t *)&usart3_rx_buffer, 128) != HAL_OK)    Error_Handler();
+
+
+  /* 开启空闲接收中断 */
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+  __HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
+  __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
 
   /* USER CODE END 2 */
 
@@ -124,6 +134,8 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+
+	  dataProcessing();
 
   }
   /* USER CODE END 3 */
