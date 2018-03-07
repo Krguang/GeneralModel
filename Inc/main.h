@@ -61,6 +61,8 @@
 #define AUX_GPIO_Port GPIOB
 #define M1_Pin GPIO_PIN_2
 #define M1_GPIO_Port GPIOB
+#define M0_Pin GPIO_PIN_3
+#define M0_GPIO_Port GPIOB
 
 /* ########################## Assert Selection ############################## */
 /**
