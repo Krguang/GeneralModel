@@ -44,7 +44,9 @@
 #include "dma.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "stdarg.h"
+#include "string.h"
+#include <stdlib.h>
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -386,6 +388,80 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 /* USER CODE BEGIN 1 */
 
+/* 串口接收空闲中断 */
+
+void UsartReceive_IDLE(UART_HandleTypeDef *huart)
+{
+
+	uint16_t i = 0;
+
+	if ((__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE) != RESET))
+	{
+		if (huart->Instance == USART1)
+		{
+			__HAL_UART_CLEAR_IDLEFLAG(huart);
+			i = huart->Instance->SR;
+			i = huart->Instance->DR;
+			i = hdma_usart1_rx.Instance->CNDTR;
+			HAL_UART_DMAStop(huart);
+
+			/* 此处处理数据，主要是拷贝和置位标志位 */
+			if (usart1_rx_flag == 0)
+			{
+				usart1_tx_len = 128 - i;
+				memcpy(usart1_tx_buffer, usart1_rx_buffer, usart1_tx_len);
+				usart1_rx_flag = 1;
+			}
+
+			/* 清空缓存，重新接收 */
+			memset(usart1_rx_buffer, 0x00, 128);
+			HAL_UART_Receive_DMA(huart, (uint8_t *)&usart1_rx_buffer, 128);
+		}
+
+		if (huart->Instance == USART2)
+		{
+			__HAL_UART_CLEAR_IDLEFLAG(huart);
+			i = huart->Instance->SR;
+			i = huart->Instance->DR;
+			i = hdma_usart2_rx.Instance->CNDTR;
+			HAL_UART_DMAStop(huart);
+
+			/* 此处处理数据，主要是拷贝和置位标志位 */
+			if (usart2_rx_flag == 0)
+			{
+				usart2_tx_len = 128 - i;
+				memcpy(usart2_tx_buffer, usart2_rx_buffer, usart2_tx_len);
+				usart2_rx_flag = 1;
+			}
+
+			/* 清空缓存，重新接收 */
+			memset(usart2_rx_buffer, 0x00, 128);
+			HAL_UART_Receive_DMA(huart, (uint8_t *)&usart2_rx_buffer, 128);
+		}
+
+		if (huart->Instance == USART3)
+		{
+			__HAL_UART_CLEAR_IDLEFLAG(huart);
+			i = huart->Instance->SR;
+			i = huart->Instance->DR;
+			i = hdma_usart3_rx.Instance->CNDTR;
+			HAL_UART_DMAStop(huart);
+
+			/* 此处处理数据，主要是拷贝和置位标志位 */
+			if (usart3_rx_flag == 0)
+			{
+				usart3_tx_len = 128 - i;
+				memcpy(usart3_tx_buffer, usart3_rx_buffer, usart3_tx_len);
+				usart3_rx_flag = 1;
+			}
+
+			/* 清空缓存，重新接收 */
+			memset(usart3_rx_buffer, 0x00, 128);
+			HAL_UART_Receive_DMA(huart, (uint8_t *)&usart3_rx_buffer, 128);
+		}
+
+	}
+}
 /* USER CODE END 1 */
 
 /**

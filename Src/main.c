@@ -49,6 +49,20 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+unsigned char usart1_rx_buffer[128];
+unsigned char usart1_tx_buffer[128];
+unsigned int usart1_tx_len = 0;
+unsigned char usart1_rx_flag = 0;
+
+unsigned char usart2_rx_buffer[128];
+unsigned char usart2_tx_buffer[128];
+unsigned int usart2_tx_len = 0;
+unsigned char usart2_rx_flag = 0;
+
+unsigned char usart3_rx_buffer[128];
+unsigned char usart3_tx_buffer[128];
+unsigned int usart3_tx_len = 0;
+unsigned char usart3_rx_flag = 0;
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */

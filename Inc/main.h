@@ -70,7 +70,20 @@
 /* #define USE_FULL_ASSERT    1U */
 
 /* USER CODE BEGIN Private defines */
+extern unsigned char usart1_rx_buffer[];
+extern unsigned char usart1_tx_buffer[];
+extern unsigned int usart1_tx_len;
+extern unsigned char usart1_rx_flag;
 
+extern unsigned char usart2_rx_buffer[];
+extern unsigned char usart2_tx_buffer[];
+extern unsigned int usart2_tx_len;
+extern unsigned char usart2_rx_flag;
+
+extern unsigned char usart3_rx_buffer[];
+extern unsigned char usart3_tx_buffer[];
+extern unsigned int usart3_tx_len;
+extern unsigned char usart3_rx_flag;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
